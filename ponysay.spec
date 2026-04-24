@@ -17,17 +17,15 @@
 
 
 Name:           ponysay
-Version:        3.0.2
-Release:        9.1%{dist}
-Summary:        Cowsay reimplemention for ponies
-License:        GPL-3.0+
-Group:          Amusements/Toys/Other
+Version:        3.0.3
+Release:        1%{?dist}
+Summary:        Cowsay reimplementation for ponies
+License:        GPL-3.0-or-later
 Url:            https://github.com/erkin/ponysay
 Source:         https://github.com/erkin/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-BuildRequires:  fdupes
-BuildRequires:  python34-devel
+BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  texinfo
-Requires:       python34
+Requires:       python3
 Requires(post): info
 Requires(preun): info
 #BuildArch:      noarch
@@ -66,8 +64,8 @@ rm -rf %{buildroot}%{_docdir}/%{name}/*.gz
 #%install_info_delete --info-dir=%{_infodir} %{_infodir}/ponythink.info%{ext_info}
 
 %files
-%defattr(-,root,root)
-%doc CHANGELOG CONTRIBUTING COPYING CREDITS LICENSE README.md
+%license LICENSE COPYING
+%doc CHANGELOG CONTRIBUTING CREDITS README.md
 %{_bindir}/pony*
 %{_datadir}/%{name}/
 #%{_infodir}/*.gz
@@ -77,6 +75,10 @@ rm -rf %{buildroot}%{_docdir}/%{name}/*.gz
 %{_datadir}/fish/
 
 %changelog
+* Fri Apr 24 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 3.0.3-1
+- Update to 3.0.3
+- Modernize spec for EL10 (remove Group, defattr, use python3)
+
 * Sat Sep  6 2014 sor.alexei@meowr.ru
 - Update to 3.0.2
   * New ponies: auntorange, grace
