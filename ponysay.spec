@@ -21,14 +21,12 @@ Version:        3.0.3
 Release:        1%{?dist}
 Summary:        Cowsay reimplementation for ponies
 License:        GPL-3.0-or-later
-Url:            https://github.com/erkin/ponysay
+URL:            https://github.com/erkin/ponysay
+ExclusiveArch:  x86_64 aarch64
 Source:         https://github.com/erkin/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  texinfo
 Requires:       python3
-Requires(post): info
-Requires(preun): info
-#BuildArch:      noarch
 
 %description
 ponysay as an awesome terminal application to display ponies speaking
@@ -36,7 +34,7 @@ messages in your terminal.
 It has many features; you can use its info manual to explore them.
 
 %prep
-%setup -q
+%autosetup -p1
 
 %build
 # Nothing to build.
@@ -53,28 +51,24 @@ rm -rf %{buildroot}%{_infodir} %{buildroot}%{_datadir}/licenses/
 rm -rf %{buildroot}%{_docdir}/%{name}/*.gz 
 %fdupes %{buildroot}/%{_datadir}/%{name}
 
-%post
-#%install_info --info-dir=%{_infodir} %{_infodir}/%{name}.info%{ext_info}
-#%install_info --info-dir=%{_infodir} %{_infodir}/%{name}-tool.info%{ext_info}
-#%install_info --info-dir=%{_infodir} %{_infodir}/ponythink.info%{ext_info}
-
-%postun
-#%install_info_delete --info-dir=%{_infodir} %{_infodir}/%{name}.info%{ext_info}
-#%install_info_delete --info-dir=%{_infodir} %{_infodir}/%{name}-tool.info%{ext_info}
-#%install_info_delete --info-dir=%{_infodir} %{_infodir}/ponythink.info%{ext_info}
-
 %files
 %license LICENSE COPYING
 %doc CHANGELOG CONTRIBUTING CREDITS README.md
 %{_bindir}/pony*
 %{_datadir}/%{name}/
-#%{_infodir}/*.gz
 %{_mandir}/*/
 %{_datadir}/bash-completion/
 %{_datadir}/zsh/
 %{_datadir}/fish/
 
 %changelog
+* Sat Jul 05 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 3.0.3-1
+- Remove commented-out #BuildArch: noarch and #%%{_infodir}/*.gz lines
+
+* Thu Jul 03 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 3.0.3-1
+- Add ExclusiveArch: x86_64 aarch64; fix Url: -> URL:; %%autosetup -p1
+- Remove empty info scriptlets and their Requires(post/preun): info
+
 * Fri Apr 24 2026 CasjaysDev <rpm-devel@casjaysdev.pro> - 3.0.3-1
 - Update to 3.0.3
 - Modernize spec for EL10 (remove Group, defattr, use python3)
